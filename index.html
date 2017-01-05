@@ -16,16 +16,63 @@
 <div class="container">
   <!-- Display Time -->
   <div class="row">
-    <code>Time will be displayed here</code>
+    <!-- <code>Time will be displayed here</code> -->
+    <h2>The Current Time:
+          <div id="timeDisplay"></div>
+    </h2>
   </div>
 
   <!-- Display table of trains -->
   <div class="row">
-    <p>display trains here</p>
+    <h3>display trains here</h3>
+    <table class="table">
+      <tr class="header">
+        <th>Train Name</th>
+        <th>Destination</th>
+        <th>Frequency</th>
+        <th>Next Arrival(mins)</th>
+        <th>Minutes Away:</th>
+        <th></th>
+      </tr>
+      <tr>
+        <td>Test</td>
+        <td>NYC</td>
+        <td>12</td>
+        <td>6</td>
+        <td>unknown</td>
+        <td><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
+      </tr>
+    </table>
+
+
   </div>
   <!-- Form to submit Train -->
   <div class="row">
-    <code>Display form here</code>
+    <h2>Submit Train info here</h2>
+    <form>
+      <!--  Train Name -->
+      <div class="form-group">
+        <label for="trainName">Name of Train:</label>
+        <input type="text" name="trainName" value="" id="trainName">
+      </div>
+      <!--  Origin -->
+      <div class="form-group">
+        <label for="origin">Origin: </label>
+        <input type="text" name="origin" value="" id="origin">
+      </div>
+      <!--  Destination -->
+      <div class="form-group">
+        <label for="destination">Destination: </label>
+        <input type="text" name="destination" value="" id="destination">
+      </div>
+      <!--  Frequency -->
+      <div class="form-group">
+        <label for="frequency">Frequency: </label>
+        <input type="text" name="frequency" value="" id="frequency">
+      </div>
+      <!-- submit -->
+      <button type="submit" class="btn btn-default" id="submit">Submit</button>
+    </form>
   </div>
 
 
@@ -33,15 +80,20 @@
 
 <!-- Including scripts here -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<script src="assets/javascript/moment.js"></script>
 <!--  load firebase -->
 <!-- <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script> -->
 <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
 <script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>
-<script src="assets/javascript/firebase_setup.js"></script>
-<script src="assets/javascript/firebase.js"></script>
+<script src="assets/javascript/firebase/01_firebase_setup.js"></script>
+<script src="assets/javascript/firebase/02_addTrain.js"></script>
+<script src="assets/javascript/firebase/03_authentication.js"></script>
+<script src="assets/javascript/firebase/04_getTrainInfo.js"></script>
 <!-- main scripts -->
+<script src="assets/javascript/time/time.js"></script>
+<script src="assets/javascript/helper.js"></script>
 <script src="assets/javascript/main.js"></script>
 
 </body>

@@ -3,18 +3,19 @@
 var firebase_db = firebase.database();
 
 // --------------------------------------------------------------
-// Create a train schedule database - works
-// firebase_db.ref("train").on("value", (snapshot)=>{
-//   console.log(snapshot.val());
-// })
-
-// --------------------------------------------------------------
 // Function adds a train to the database
-function addTrain(destination, time){
+// @param id {number} - the train number
+// @param origin {string} - the station the train left
+// @param destination {string} - where the train is destined forEach
+// @param frequency {number} - how frequently in minutes the train comes
+function addTrain(id, origin, destination, frequency){
   // data to post
   var postData = {
+    id: id,
+    origin: origin,
     destination: destination,
-    time: time,
+    frequency: frequency,
+    timeStamp: moment().valueOf(),
   }
   // get a new post key
   var newPostKey = firebase_db.ref().child('trains').push().key;
@@ -26,4 +27,6 @@ function addTrain(destination, time){
   return firebase_db.ref().update(updates);
 }
 
-var test = addTrain("Tampa", 12345);
+// --------------------------------------------------------------
+// // test the function that adds a train
+// var test = addTrain("Tampa", 12345);
