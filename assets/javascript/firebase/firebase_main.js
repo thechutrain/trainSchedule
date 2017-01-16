@@ -27,7 +27,8 @@ function addTrain(name, destination, firstTrain, frequency){
   return firebase_db.ref().update(updates);
 }
 
-// --------------------------------------------------------------
+// ---------------- PART II.  ----------------
+// ---------------- Get Train Data from the Firebase DB ----------------
 // get a references to the trains table in firebase
 var trains_ref = firebase_db.ref('trains/');
 // Event Listener with call back function
@@ -35,18 +36,55 @@ var trains_ref = firebase_db.ref('trains/');
 trains_ref.on('value', displayAllTrains); // difference if data ever gets changed, it automatically updates!
 
 // helper function -- gets called back
-function displayAllTrains(all_trains){
-  // get all the trains
-  all_trains.forEach(function(train){
-    // for each train in the all_trains
-    // 1) get all the object keys
-    var train_obj = train.val();
-    for (key in train_obj){
-      console.log(key + ": " + train_obj[key]);
-    }
-    console.log(" - - - - - - - - - ");
+function displayAllTrains(firebase_data){
+  all_trains = firebase_data.val();
+  // TO DO: make an array of object keys --> run through forEach to make each element
 
-  }) // closes forEach on all trains
+  // get all the trains
+  Object.keys(all_trains).forEach(function(train_id){
+    // DEBUGGIN purpose
+    // console.log(train_id);
+    // debugger;
+
+    // 1. for each train make a new row in the table
+    var train_row = $("<tr>").attr("train_id", train_id);
+
+    // 2. get a train object
+    var train_obj = all_trains[train_id];
+
+    // DEBUGGING purpose
+    // for (key in train_obj){
+    //   console.log(key + ": " + train_obj[key]);
+    // }
+    // console.log(" - - - - - - - - - ");
+
+    // 3. make a new td element for each of the train descriptors.
+    var name = $("<td>").text(train_obj["name"]);
+    var destination = $("<td>").text(train_obj["destination"]);
+    var frequency = $("<td>").text("--");
+    var nextArrival = $("<td>").text("--");
+    var minsAway = $("<td>").text("--");
+    // 3.5 Make a remove btn
+    var removeSpan = $("<span>").addClass("glyphicon glyphicon-remove");
+    var removeBtn = $("<button>")
+      .addClass("btn btn-danger removeBtn")
+      .data("id", train_id)
+      .append(removeSpan);
+    var removeBtnTd = $("<td>").append(removeBtn);
+
+    // 4. append all the train key-values to the row
+    train_row
+      .append(name)
+      .append(destination)
+      .append(frequency)
+      .append(nextArrival)
+      .append(minsAway)
+      .append(removeBtnTd);
+
+    // 5. append row to the html
+    $("table").append(train_row);
+
+  }); // closes forEach
 };
 
 // --------------------------------------------------------------
