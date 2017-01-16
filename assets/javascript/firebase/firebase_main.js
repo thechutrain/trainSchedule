@@ -28,27 +28,25 @@ function addTrain(name, destination, firstTrain, frequency){
 }
 
 // --------------------------------------------------------------
-// // test the function that adds a train
-// var test = addTrain("Tampa", 12345);
+// get a references to the trains table in firebase
+var trains_ref = firebase_db.ref('trains/');
+// Event Listener with call back function
+// trains_ref.once('value', displayAllTrains);
+trains_ref.on('value', displayAllTrains); // difference if data ever gets changed, it automatically updates!
 
-var train_ref = firebase_db.ref('trains/');
-// console.log(train_ref.val());
-train_ref.once('value', function(all_trains){
+// helper function -- gets called back
+function displayAllTrains(all_trains){
   // get all the trains
   all_trains.forEach(function(train){
     // for each train in the all_trains
     // 1) get all the object keys
     var train_obj = train.val();
-    // console.log(train_obj);
-    // console.log(typeof train_obj);
-    // var keys = Object.keys(train_obj).map(function(key){
-    //   return train_obj[key];
-    // });
-    // console.log(keys);
-
     for (key in train_obj){
       console.log(key + ": " + train_obj[key]);
     }
+    console.log(" - - - - - - - - - ");
 
   }) // closes forEach on all trains
-})
+};
+
+// --------------------------------------------------------------
