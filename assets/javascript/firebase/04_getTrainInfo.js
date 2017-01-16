@@ -6,8 +6,16 @@ train_ref.once('value', function(all_trains){
     // for each train in the all_trains
     // 1) get all the object keys
     var train_obj = train.val();
+    // console.log(train_obj);
+    // console.log(typeof train_obj);
+    // var keys = Object.keys(train_obj).map(function(key){
+    //   return train_obj[key];
+    // });
+    // console.log(keys);
 
+    for (key in train_obj){
+      console.log(key + ": " + train_obj[key]);
+    }
 
-    // debugger;
   }) // closes forEach on all trains
 })

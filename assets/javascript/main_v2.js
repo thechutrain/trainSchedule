@@ -13,13 +13,14 @@ function getFormData(){
 }
 
 function clearFormData(){
-  var trainName = $("#trainName").val("");
-  var origin = $("#origin").val("");
-  var destination = $("#destination").val("");
-  var frequency = $("#frequency").val("");
+  $("#trainName").val("");
+  $("#destination").val("");
+  $("#firstTrain").val("");
+  $("#frequency").val("");
 }
 
 // ---------------------------------------------------
+// EVENT LISTENERS!!
 // Handle submit button
 $("#submit").on("click", function(e){
   //1) prevent default
