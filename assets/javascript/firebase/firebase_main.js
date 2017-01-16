@@ -2,7 +2,8 @@
 // Create a variable to reference the database.
 var firebase_db = firebase.database();
 
-// --------------------------------------------------------------
+//  ------------------ PART I. ----------------------------------
+// ---------- add train data to the firebase db ----------------
 // Function adds a train to the database
 // @param id {number} - the train number
 // @param origin {string} - the station the train left
@@ -10,25 +11,25 @@ var firebase_db = firebase.database();
 // @param frequency {number} - how frequently in minutes the train comes
 function addTrain(name, destination, firstTrain, frequency){
   // data to post
-  var postData = {
+  var trainData = {
     name: name,
     destination: destination,
-    firstTrain: moment(),
+    firstTrain: moment().format(), //set for current time for now
     frequency: frequency,
     // timeStamp: moment().valueOf(),
   }
-  // get a new post key
-  var newPostKey = firebase_db.ref().child('trains').push().key;
+
+  // get a new key for a new train
+  var newTrainKey = firebase_db.ref().child("trains").push().key;
+
   // write a new update
   var updates = {};
-  updates['/trains/' + newPostKey] = postData;
-
-  // Updating
+  updates['trains/' + newTrainKey] = trainData;
   return firebase_db.ref().update(updates);
 }
 
-// ---------------- PART II.  ----------------
-// ---------------- Get Train Data from the Firebase DB ----------------
+//  ------------------ PART II. ----------------------------------
+// ---------------- Get Train Data from the Firebase DB ----------
 // get a references to the trains table in firebase
 var trains_ref = firebase_db.ref('trains/');
 // Event Listener with call back function
@@ -37,17 +38,29 @@ trains_ref.on('value', displayAllTrains); // difference if data ever gets change
 
 // helper function -- gets called back
 function displayAllTrains(firebase_data){
+  // 0. remove all train instances in the table
+  $(".train").remove();
+
+  // get the train object
   all_trains = firebase_data.val();
   // TO DO: make an array of object keys --> run through forEach to make each element
-
   // get all the trains
+  // Don't proceed if there's an empty object
+  if ($.isEmptyObject(all_trains)){
+    var message = $("<h4>").addClass("train bg-danger").text("No train data to show");
+    $("table").append(message);
+    return;
+  };
+
   Object.keys(all_trains).forEach(function(train_id){
     // DEBUGGIN purpose
     // console.log(train_id);
     // debugger;
 
     // 1. for each train make a new row in the table
-    var train_row = $("<tr>").attr("train_id", train_id);
+    var train_row = $("<tr>")
+      .addClass("train")
+      .attr("train_id", train_id);
 
     // 2. get a train object
     var train_obj = all_trains[train_id];
@@ -61,7 +74,7 @@ function displayAllTrains(firebase_data){
     // 3. make a new td element for each of the train descriptors.
     var name = $("<td>").text(train_obj["name"]);
     var destination = $("<td>").text(train_obj["destination"]);
-    var frequency = $("<td>").text("--");
+    var frequency = $("<td>").text(train_obj["frequency"]);
     var nextArrival = $("<td>").text("--");
     var minsAway = $("<td>").text("--");
     // 3.5 Make a remove btn
