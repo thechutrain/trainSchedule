@@ -1,3 +1,26 @@
+function getFormData(){
+  var trainName = $("#trainName").val().trim();
+  var destination = $("#destination").val().trim();
+  var firstTrain = $("#firstTrain").val().trim();
+  var frequency = $("#frequency").val().trim();
+  var trainData = {
+    0: trainName,
+    1: destination,
+    2: firstTrain,
+    3: frequency,
+  };
+  return trainData;
+}
+
+function clearFormData(){
+  $("#trainName").val("");
+  $("#destination").val("");
+  $("#firstTrain").val("");
+  $("#frequency").val("");
+}
+
+// ---------------------------------------------------
+// EVENT LISTENERS!!
 // Handle submit button
 $("#submit").on("click", function(e){
   //1) prevent default
