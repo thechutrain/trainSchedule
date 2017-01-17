@@ -9,12 +9,19 @@ var firebase_db = firebase.database();
 // @param origin {string} - the station the train left
 // @param destination {string} - where the train is destined forEach
 // @param frequency {number} - how frequently in minutes the train comes
-function addTrain(name, destination, firstTrain, frequency){
+function addTrain(name, destination, firstTrainTime, frequency){
+  var firstTrainTime = "08:00";
+  var firstTrainNum =  moment("2017-01-17T" + firstTrainTime + ":00-05:00").unix() * 1000;
+  // var firstTrainNum =  moment("2017-01-17T" + firstTrainTime + ":00-05:00").valueOf(); // same thing
+  // console.log(typeof firstTrain); // number
+  // debugger;
+
+
   // data to post
   var trainData = {
     name: name,
     destination: destination,
-    firstTrain: moment().format(), //set for current time for now
+    firstTrain: firstTrainNum, //set for current time for now
     frequency: frequency,
     // timeStamp: moment().valueOf(),
   }
@@ -57,13 +64,23 @@ function displayAllTrains(firebase_data){
     // console.log(train_id);
     // debugger;
 
+    // 0. get a train object
+    var train_obj = all_trains[train_id];
+    var train_str = JSON.stringify(train_obj);
+    // console.log(train_str);
+    // debugger;
+
     // 1. for each train make a new row in the table
     var train_row = $("<tr>")
       .addClass("train")
-      .attr("train_id", train_id);
+      .attr("train_id", train_id)
+      .data("trainObj", train_str); // store all the train info in the row!
 
-    // 2. get a train object
-    var train_obj = all_trains[train_id];
+    // 2. Get the proper time & calculate times:
+    var origin_time = moment(train_obj["firstTrain"]).format();
+    var frequency = train_obj["frequency"];
+    var minsAway = Math.ceil(nextTrain(origin_time, frequency));
+    var nextArrival = moment().add(minsAway, "minutes").format("hh:mm");
 
     // DEBUGGING purpose
     // for (key in train_obj){
@@ -72,11 +89,12 @@ function displayAllTrains(firebase_data){
     // console.log(" - - - - - - - - - ");
 
     // 3. make a new td element for each of the train descriptors.
-    var name = $("<td>").text(train_obj["name"]);
-    var destination = $("<td>").text(train_obj["destination"]);
-    var frequency = $("<td>").text(train_obj["frequency"]);
-    var nextArrival = $("<td>").text("--");
-    var minsAway = $("<td>").text("--");
+    var name = $("<td class='train-name'>").text(train_obj["name"]);
+    var destination = $("<td class='train-destination'>").text(train_obj["destination"]);
+    var frequency = $("<td class='train-frequency'>").text(train_obj["frequency"]);
+    var nextArrival = $("<td class='train-nextArrival'>").text(nextArrival);
+    // var nextArrival = $("<td>").text(train_obj["firstTrain"]);
+    var minsAway = $("<td class='train-minsAway'>").text(minsAway);
     // 3.5 Make a remove btn
     var removeSpan = $("<span>").addClass("glyphicon glyphicon-remove");
     var removeBtn = $("<button>")

@@ -17,6 +17,13 @@ var time = {
     timerReference = setInterval(function(){
       this.currentTime = moment();
       this.display();
+      // call the update function if seconds == 00;
+      console.log(this.currentTime.seconds()); // debugging
+      if (this.currentTime.seconds() === 0){
+        // update;
+        // test();
+        updateTrainTimes();
+      };
     }.bind(this), 1000);
   },
 

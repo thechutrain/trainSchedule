@@ -1,6 +1,81 @@
+// HELPER FUNCTIONS
+// -------------------------------------------------------
+// given a train id, it will remove the train
 function removeTrain(train_id){
   // console.warn(train_id);
-  debugger;
   firebase_db.ref("trains/" + train_id).remove();
-  console.warn(train_id);
-}
+};
+
+// -------------------------------------------------------
+// this function gets the time until the next train, given the original time & interval
+function nextTrain(origin_time, interval){
+  var now = moment();
+  var diff = now.diff(origin_time, "minutes", true); // true param --> gives exact, in decimal.
+  // console.log("diff: " + diff);
+  var next_train_in = interval - (diff % interval);
+  // console.log("Next: " + next_train_in);
+  // return Math.ceil(next_train_in); // return an interger
+  return next_train_in;
+};
+// // testing
+// var origin_time = moment("2017-01-17T08:00:02-05:00");
+// nextTrain(origin_time, 15);
+
+// -------------------------------------------------------
+// this function will update the next arrival & minutes away for each train;
+function updateTrainTimes(){
+  // Get all the trains into a train array
+  var trains_NodeList = document.querySelectorAll("tr.train"); // returns a NodeList
+  var trains_array = [];
+  // debugger;
+  // allTrains.prototype.forEach(function(train){
+  //   allTrains_array.push(train);
+  // });
+  for (var i=0; i < trains_NodeList.length; i++){
+    trains_array.push(trains_NodeList[i]);
+  };
+  // console.log(trains_array);
+  // debugger;
+
+  // if array is empty just exit;
+  if (trains_array.length === 0){
+    console.log("no trains");
+    return;
+  }
+
+  // for each train,
+  trains_array.forEach(function(tr_train){
+    // i. Get the train object
+    var train_ref = $(tr_train);
+    var trainObj = JSON.parse(train_ref.data("trainObj"));
+    // console.log(trainObj);
+    // debugger;
+
+    // ii. calculate the minutes away
+    var minsAway = nextTrain(trainObj["firstTrain"], trainObj["frequency"]);
+    var minsAway = Math.ceil(minsAway); // convert to integer
+
+    // iii. set the next arrival
+    var nextArrival = moment().add(minsAway, "minutes").format("hh:mm");
+
+    // *check to see if train arrived
+    if (minsAway === 0){
+      minsAway = " -- ";
+      nextArrival = " Arrived ";
+    }
+
+    // iv. update the view
+    $(tr_train).find(".train-minsAway").text(minsAway);
+    $(tr_train).find(".train-nextArrival").text(nextArrival);
+
+  })
+};
+// TESTING
+// window.setInterval(function(){
+//     updateTrainTimes();
+//     console.log("updated");
+// }, 2000);
+
+// function test(){
+//   console.warn("sup braaaaa");
+// }
