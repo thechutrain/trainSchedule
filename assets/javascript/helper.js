@@ -9,12 +9,17 @@ function removeTrain(train_id){
 // -------------------------------------------------------
 // this function gets the time until the next train, given the original time & interval
 function nextTrain(origin_time, interval){
+  // Turn unix nums --> moment objects
+  firstTrain = moment(origin_time);
   var now = moment();
-  var diff = now.diff(origin_time, "minutes", true); // true param --> gives exact, in decimal.
-  // console.log("diff: " + diff);
-  var next_train_in = interval - (diff % interval);
-  // console.log("Next: " + next_train_in);
-  // return Math.ceil(next_train_in); // return an interger
+  var timeDiff = firstTrain.diff(now, "minutes", true);
+
+  // check to see if firstTrainHas Passed
+  if (timeDiff > interval){
+    var next_train_in = timeDiff;
+  } else {
+    var next_train_in = interval - (Math.abs(timeDiff) % interval);
+  };
   return next_train_in;
 };
 // // testing
@@ -56,17 +61,33 @@ function updateTrainTimes(){
     // var minsAway = Math.ceil(minsAway); // convert to integer
 
     // iii. set the next arrival
-    var nextArrival = moment().add(minsAway, "minutes").format("hh:mm");
+    var nextArrival = moment().add(minsAway, "minutes").format("HH:mm");
+
+    var trainHasPassed = true;
+    //* Don't display trains that are set in the future
+    // var firstTrain_moment = moment(trainObj["firstTrain"]);
+    // var now = moment().add(trainObj["frequency"], "minutes");
+    firstTrain = moment(trainObj["firstTrain"]);
+    var now = moment();
+    var timeDiff = firstTrain.diff(now, "minutes", true);
+    // debugger;
+    if (timeDiff > trainObj["frequency"] ){
+      // train is in the future
+      // debugger;
+      trainHasPassed = false;
+    };
+
 
     // *check to see if train arrived
     // console.log((trainObj["frequency"] - minsAway));
     // debugger;
-    if ((trainObj["frequency"] - minsAway) < 0.2){
+    if (((trainObj["frequency"] - minsAway) < 0.2) && trainHasPassed){
       minsAway = " -- ";
       nextArrival = " Arrived ";
     } else {
       var minsAway = Math.ceil(minsAway); // convert to integer
-    }
+    };
+
 
     // iv. update the view
     $(tr_train).find(".train-minsAway").text(minsAway);
@@ -83,3 +104,9 @@ function updateTrainTimes(){
 // function test(){
 //   console.warn("sup braaaaa");
 // }
+
+// -------------------------------------------------------
+// this function validates that the time entered by the user is valid
+function validateTime(){
+
+}

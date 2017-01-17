@@ -10,7 +10,7 @@ var firebase_db = firebase.database();
 // @param destination {string} - where the train is destined forEach
 // @param frequency {number} - how frequently in minutes the train comes
 function addTrain(name, destination, firstTrainTime, frequency){
-  var firstTrainTime = "08:00";
+  // var firstTrainTime = "08:00";
   var firstTrainNum =  moment("2017-01-17T" + firstTrainTime + ":00-05:00").unix() * 1000;
   // var firstTrainNum =  moment("2017-01-17T" + firstTrainTime + ":00-05:00").valueOf(); // same thing
   // console.log(typeof firstTrain); // number
@@ -80,8 +80,8 @@ function displayAllTrains(firebase_data){
     var origin_time = moment(train_obj["firstTrain"]).format();
     var frequency = train_obj["frequency"];
     var minsAway = Math.ceil(nextTrain(origin_time, frequency));
-    var nextArrival = moment().add(minsAway, "minutes").format("hh:mm");
-
+    var nextArrival = moment().add(minsAway, "minutes").format("HH:mm");
+    var firstTrainTime = moment(train_obj["firstTrain"]).format("HH:mm");
     // DEBUGGING purpose
     // for (key in train_obj){
     //   console.log(key + ": " + train_obj[key]);
@@ -91,10 +91,11 @@ function displayAllTrains(firebase_data){
     // 3. make a new td element for each of the train descriptors.
     var name = $("<td class='train-name'>").text(train_obj["name"]);
     var destination = $("<td class='train-destination'>").text(train_obj["destination"]);
+    var firstTrain = $("<td class='train-firstTrain'>").text(firstTrainTime);
     var frequency = $("<td class='train-frequency'>").text(train_obj["frequency"]);
     var nextArrival = $("<td class='train-nextArrival'>").text(nextArrival);
-    // var nextArrival = $("<td>").text(train_obj["firstTrain"]);
     var minsAway = $("<td class='train-minsAway'>").text(minsAway);
+
     // 3.5 Make a remove btn
     var removeSpan = $("<span>").addClass("glyphicon glyphicon-remove");
     var removeBtn = $("<button>")
@@ -107,6 +108,7 @@ function displayAllTrains(firebase_data){
     train_row
       .append(name)
       .append(destination)
+      .append(firstTrain)
       .append(frequency)
       .append(nextArrival)
       .append(minsAway)

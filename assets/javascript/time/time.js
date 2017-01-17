@@ -29,7 +29,7 @@ var time = {
   },
 
   display(){
-    let time = this.currentTime.format('hh:mm:ss a'); // time is a string
+    let time = this.currentTime.format('HH:mm:ss'); // time is a string 'hh:mm:ss a'
     this.displayTarget.html(time);
   }
 }
