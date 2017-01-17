@@ -37,7 +37,8 @@ $(document).ready(function(){
     e.preventDefault();
     // 2) get the form data
     var data = getFormData();
-    if (!data){return;}
+    if (!data){return;} // if not valid data, exit out!
+    
     // 3) submit the train data
     var return_obj = addTrain(data[0], data[1], data[2], data[3]);
     // debugger;
