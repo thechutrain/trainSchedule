@@ -107,6 +107,12 @@ function updateTrainTimes(){
 
 // -------------------------------------------------------
 // this function validates that the time entered by the user is valid
-function validateTime(){
+function validTime(timeInput){
+  var re = new RegExp("^[0-9]{1,2}[:][0-9]{2}$", "g");
+  var isValid = re.test(timeInput) ? true : false;
+  // console.log(isValid);
+  // debugger;
+  return isValid;
+};
 
-}
+validTime("01:44");
