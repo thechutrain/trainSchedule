@@ -53,15 +53,19 @@ function updateTrainTimes(){
 
     // ii. calculate the minutes away
     var minsAway = nextTrain(trainObj["firstTrain"], trainObj["frequency"]);
-    var minsAway = Math.ceil(minsAway); // convert to integer
+    // var minsAway = Math.ceil(minsAway); // convert to integer
 
     // iii. set the next arrival
     var nextArrival = moment().add(minsAway, "minutes").format("hh:mm");
 
     // *check to see if train arrived
-    if (minsAway === 0){
+    // console.log((trainObj["frequency"] - minsAway));
+    // debugger;
+    if ((trainObj["frequency"] - minsAway) < 0.2){
       minsAway = " -- ";
       nextArrival = " Arrived ";
+    } else {
+      var minsAway = Math.ceil(minsAway); // convert to integer
     }
 
     // iv. update the view

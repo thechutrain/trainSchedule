@@ -18,10 +18,11 @@ var time = {
       this.currentTime = moment();
       this.display();
       // call the update function if seconds == 00;
-      console.log(this.currentTime.seconds()); // debugging
-      if (this.currentTime.seconds() === 0){
+      // console.log(this.currentTime.seconds()); // debugging
+      if ((this.currentTime.seconds() % 6) === 0){
         // update;
         // test();
+        // console.info("updating ...");
         updateTrainTimes();
       };
     }.bind(this), 1000);
