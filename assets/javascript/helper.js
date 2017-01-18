@@ -120,6 +120,15 @@ function displaySignOut(){
   // remove any buttons inside the navBar
   navBar.find("button").remove();
 
+  // add the name the user is signed in as ...
+  var user = firebase.auth().currentUser;
+  if (user!=null){
+    // var userName = user.providerData.email;
+    var userName = user.email;
+    var signedInAs = $("<p>").addClass("navbar-text userInfo").text(userName);
+    navBar.append(signedInAs);
+  }
+
   // make a signout button
   var signOutBtn = $("<button>")
     .attr("type", "button")
@@ -132,7 +141,7 @@ function displaySignOut(){
   // add event listener to sign out btn
   signOutBtn.on("click", signOut); // closes event listener
 
-  debugger;
+  // debugger;
   // append the signout button
   navBar.append(signOutBtn);
 
@@ -155,11 +164,12 @@ function signOut(){
 
 // #7)
 function displaySignIn(){
-  console.warn("Display Sign in ...");
+  console.warn("Display Sign in / Sign up...");
   // get ref to nav-bar & signin button
   var navBar = $("div.navbar-header");
   // remove any buttons inside the navBar
   navBar.find("button").remove();
+  navBar.find(".userInfo").remove();
 
   // make a signin button
   var signInBtn = $("<button>")
@@ -182,7 +192,7 @@ function displaySignIn(){
   signUpBtn.on("click", signUp_PROXY);
 
   // add the button to html
-  debugger;
+  // debugger;
   navBar.append(signInBtn);
   navBar.append(signUpBtn);
 
