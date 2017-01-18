@@ -1,12 +1,14 @@
 // HELPER FUNCTIONS
-// -------------------------------------------------------
+// #1)
 // given a train id, it will remove the train
 function removeTrain(train_id){
   // console.warn(train_id);
   firebase_db.ref("trains/" + train_id).remove();
 };
+// ----------------------- END #1 --------------------------------
 
-// -------------------------------------------------------
+
+// #2)
 // this function gets the time until the next train, given the original time & interval
 function nextTrain(origin_time, interval){
   // Turn unix nums --> moment objects
@@ -25,8 +27,9 @@ function nextTrain(origin_time, interval){
 // // testing
 // var origin_time = moment("2017-01-17T08:00:02-05:00");
 // nextTrain(origin_time, 15);
+// ------------------------ END #2 -------------------------------
 
-// -------------------------------------------------------
+// #3)
 // this function will update the next arrival & minutes away for each train;
 function updateTrainTimes(){
   // Get all the trains into a train array
@@ -95,17 +98,9 @@ function updateTrainTimes(){
 
   })
 };
-// TESTING
-// window.setInterval(function(){
-//     updateTrainTimes();
-//     console.log("updated");
-// }, 2000);
+// ------------------------- END #3 -------------------------------
 
-// function test(){
-//   console.warn("sup braaaaa");
-// }
-
-// -------------------------------------------------------
+// #4)
 // this function validates that the time entered by the user is valid
 function validTime(timeInput){
   var re = new RegExp("^[0-9]{1,2}[:][0-9]{2}$", "g");
@@ -114,5 +109,121 @@ function validTime(timeInput){
   // debugger;
   return isValid;
 };
+// ------------------------- END #4 -------------------------------
 
-validTime("01:44");
+
+// #5)
+function displaySignOut(){
+  console.warn("Display Sign out ...");
+  // get ref to nav-bar & signin button
+  var navBar = $("div.navbar-header");
+  // remove any buttons inside the navBar
+  navBar.find("button").remove();
+
+  // make a signout button
+  var signOutBtn = $("<button>")
+    .attr("type", "button")
+    .addClass("btn btn-default navbar-btn")
+    .attr("id", "signin");
+
+  // change the sign in button to a sign out button;
+  signOutBtn.attr("id", "signOut").text("Sign out");
+
+  // add event listener to sign out btn
+  signOutBtn.on("click", signOut); // closes event listener
+
+  debugger;
+  // append the signout button
+  navBar.append(signOutBtn);
+
+};
+// ------------------------- END #5 -------------------------------
+
+// #6)
+function signOut(){
+  // console.log("YOU CLICKED THE SIGN OUT BUTTON?????");
+  firebase.auth().signOut().then(function() {
+    // Sign-out successful.
+    console.info("You've successfully signed out");
+  }, function(error) {
+    // An error happened.
+    alert("ERROR ... check your console");
+    console.log(error);
+  });
+};
+// ------------------------- END #6 -------------------------------
+
+// #7)
+function displaySignIn(){
+  console.warn("Display Sign in ...");
+  // get ref to nav-bar & signin button
+  var navBar = $("div.navbar-header");
+  // remove any buttons inside the navBar
+  navBar.find("button").remove();
+
+  // make a signin button
+  var signInBtn = $("<button>")
+    .attr("type", "button")
+    .addClass("btn btn-default navbar-btn")
+    .attr("id", "signin")
+    .text("Sign in");
+
+  // // add event listener to sign out btn
+  signInBtn.on("click", signIn_PROXY); // closes event listener
+
+  // TO DO ... display a SIGN UP as well
+  // make a signUp button
+  var signUpBtn = $("<button>")
+    .attr("type", "button")
+    .addClass("btn btn-default navbar-btn")
+    .attr("id", "signUp")
+    .text("Sign Up");
+
+  signUpBtn.on("click", signUp_PROXY);
+
+  // add the button to html
+  debugger;
+  navBar.append(signInBtn);
+  navBar.append(signUpBtn);
+
+};
+// ------------------------- END #7 -------------------------------
+
+
+// #8)
+function signIn(email, password){
+  firebase.auth().signInWithEmailAndPassword(email, password)
+  .catch(function(error) {
+  // Handle Errors here.
+  console.warn("ERRORS ...");
+  console.warn(error);
+  // var errorCode = error.code;
+  // var errorMessage = error.message;
+  });
+};
+
+function signIn_PROXY(){
+  console.log("Let's sign in");
+  var email = prompt("What is your email?");
+  var password = prompt("Enter your password");
+  signIn(email, password);
+}
+// ------------------------- END #8 -------------------------------
+
+
+// #9)
+function signUp_PROXY(){
+  console.log("Let;s sign UPPPP");
+  var email = prompt("What is your email?");
+  var password = prompt("Enter your password");
+  signUp(email, password);
+};
+// eventually just the lower one
+function signUp(email, password){
+  firebase.auth().createUserWithEmailAndPassword(email, password)
+  .catch(function(error) {
+    var errorCode = error.code;
+    var errorMessage = error.message;
+  });
+};
+// ------------------------- END #9 -------------------------------
