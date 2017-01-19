@@ -118,7 +118,10 @@ function displaySignOut(){
   // get ref to nav-bar & signin button
   var navBar = $("div.navbar-header");
   // remove any buttons inside the navBar
-  navBar.find("button").remove();
+  // navBar.find("button").remove();
+  navBar.find("#signIn").hide();
+  navBar.find("#signUp").hide();
+  navBar.find("#signOut").show();
 
   // add the name the user is signed in as ...
   var user = firebase.auth().currentUser;
@@ -128,23 +131,6 @@ function displaySignOut(){
     var signedInAs = $("<p>").addClass("navbar-text userInfo").text(userName);
     navBar.append(signedInAs);
   }
-
-  // make a signout button
-  var signOutBtn = $("<button>")
-    .attr("type", "button")
-    .addClass("btn btn-default navbar-btn")
-    .attr("id", "signin");
-
-  // change the sign in button to a sign out button;
-  signOutBtn.attr("id", "signOut").text("Sign out");
-
-  // add event listener to sign out btn
-  signOutBtn.on("click", signOut); // closes event listener
-
-  // debugger;
-  // append the signout button
-  navBar.append(signOutBtn);
-
 };
 // ------------------------- END #5 -------------------------------
 
@@ -154,6 +140,8 @@ function signOut(){
   firebase.auth().signOut().then(function() {
     // Sign-out successful.
     console.info("You've successfully signed out");
+    // TO DO: alert the user here?
+    displaySignIn();
   }, function(error) {
     // An error happened.
     alert("ERROR ... check your console");
@@ -164,45 +152,15 @@ function signOut(){
 
 // #7)
 function displaySignIn(){
-  console.warn("Display Sign in / Sign up...");
+  console.info("Display Sign in / Sign up...");
   // get ref to nav-bar & signin button
   var navBar = $("div.navbar-header");
-  // remove any buttons inside the navBar
-  navBar.find("button").remove();
+
+  // hide the signout button & remove userInfo
+  navBar.find("#signIn").show();
+  navBar.find("#signUp").show();
+  navBar.find("#signOut").hide();
   navBar.find(".userInfo").remove();
-
-  // make a signin button
-  var signInBtn = $("<button>")
-    .attr("type", "button")
-    .addClass("btn btn-primary navbar-btn")
-    .attr("id", "signin")
-    .text("Sign in")
-    .data("toggle", "modal")
-    .data("target", "#exampleModal");
-
-  // // add event listener to sign out btn
-  signInBtn.on("click", function(){
-    // signIn_PROXY();
-    console.log("You clicked me");
-    // $("#exampleModal").click();
-    $("#exampleModal").trigger("click");
-  }); // closes event listener
-
-  // TO DO ... display a SIGN UP as well
-  // make a signUp button
-  var signUpBtn = $("<button>")
-    .attr("type", "button")
-    .addClass("btn btn-default navbar-btn")
-    .attr("id", "signUp")
-    .text("Sign Up");
-
-  signUpBtn.on("click", signUp_PROXY);
-
-  // add the button to html
-  // debugger;
-  navBar.append(signInBtn);
-  navBar.append(signUpBtn);
-
 };
 
 // ------------------------- END #7 -------------------------------
@@ -210,13 +168,18 @@ function displaySignIn(){
 
 // #8)
 function signIn(email, password){
-  firebase.auth().signInWithEmailAndPassword(email, password)
-  .catch(function(error) {
-  // Handle Errors here.
-  console.warn("ERRORS ...");
-  console.warn(error);
-  // var errorCode = error.code;
-  // var errorMessage = error.message;
+  firebase.auth().signInWithEmailAndPassword(email, password).then(function(response){
+    // TO DO: REMOVE THE MODAL
+    console.log("You just signed successfully!!");
+    console.log(response);
+    // debugger;
+  }).catch(function(error) {
+    // Handle Errors here.
+    console.warn("ERRORS ...");
+    console.warn(error);
+    // debugger;
+    // var errorCode = error.code;
+    // var errorMessage = error.message;
   });
 };
 
@@ -238,10 +201,61 @@ function signUp_PROXY(){
 };
 // eventually just the lower one
 function signUp(email, password){
-  firebase.auth().createUserWithEmailAndPassword(email, password)
+  firebase.auth().createUserWithEmailAndPassword(email, password).then(function(result){
+    console.log(result);
+    debugger;
+  })
   .catch(function(error) {
     var errorCode = error.code;
     var errorMessage = error.message;
   });
 };
 // ------------------------- END #9 -------------------------------
+
+// #10
+// event listeners for the Modal Sign in / Sign up / Login
+$(document).ready(function(){
+  // EVENT LISTENRS FOR THE NAV BUTTONS
+  // Sign Out -- navbar
+  $(".navbar-header #signOut").on("click", signOut);
+
+  // EVENT LISTENERS FOR THE MODALS BUTTONS
+  // event listener --> display Sign In Modal
+  $("button#signInBtnSubmit").on("click", function(){
+    console.log("Trying to sign in...");
+    // Get the user's email and password
+    var userEmail = $("#inputEmail_1").val().trim();
+    var userPassword = $("#inputPassword_1").val().trim();
+    // TO DO: - validate userEmail?
+    // sign the user in
+    signIn(userEmail, userPassword);
+  });
+
+  // event listener --> display Sign Up Modal
+  $("button#signUpBtnSubmit").on("click", function(){
+    console.info("Trying to start an account ehhh?");
+    // Get the form data:
+    var userEmail = $("#inputEmail_2").val().trim();
+    var password_2 = $("#inputPassword_2").val().trim();
+    var password_3 = $("#inputPassword_3").val().trim();
+
+    // TO DO: Validate two passwords the same, userEmail etc.
+
+    signUp(userEmail, password_2);
+  });
+
+})
+// ------------------------- END #10 -------------------------------
+
+// #11
+// hideContent if no user signed in
+hideContent(){
+
+}
+// ------------------------- END #11 -------------------------------
+
+// #12
+// displayContent if no user signed in
+hideContent(){
+
+}

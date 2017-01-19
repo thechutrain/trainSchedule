@@ -79,6 +79,7 @@ function displayAllTrains(firebase_data){
     // 2. Get the proper time & calculate times:
     var origin_time = moment(train_obj["firstTrain"]).format();
     var frequency = train_obj["frequency"];
+    // debugger; // why is nextTrain not defined?
     var minsAway = Math.ceil(nextTrain(origin_time, frequency));
     var nextArrival = moment().add(minsAway, "minutes").format("HH:mm");
     var firstTrainTime = moment(train_obj["firstTrain"]).format("HH:mm");

@@ -31,6 +31,11 @@ function getFormData(){
 // ---------------------------------------------------
 // EVENT LISTENERS!!
 $(document).ready(function(){
+  // Event listeners for Login, Sign Up, Logout
+  $("div.navbar-header button").on("click", function(){
+    console.info(this);
+  });
+
   // Event Listener for form submission
   $("#submitBtn").on("click", function(e){
     //1) prevent default
@@ -38,7 +43,7 @@ $(document).ready(function(){
     // 2) get the form data
     var data = getFormData();
     if (!data){return;} // if not valid data, exit out!
-    
+
     // 3) submit the train data
     var return_obj = addTrain(data[0], data[1], data[2], data[3]);
     // debugger;

@@ -22,5 +22,8 @@ firebase.auth().onAuthStateChanged(function(user){
     // No User is signed in
     // console.info("NO USER signed in :( ");
     displaySignIn();
+
+    // Hide content
+    hideContent();
   }
 }); // closes onAuthStateChanged
