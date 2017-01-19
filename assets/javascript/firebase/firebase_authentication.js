@@ -24,6 +24,6 @@ firebase.auth().onAuthStateChanged(function(user){
     displaySignIn();
 
     // Hide content
-    hideContent();
+    // hideContent();
   }
 }); // closes onAuthStateChanged

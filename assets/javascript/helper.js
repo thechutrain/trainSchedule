@@ -249,13 +249,13 @@ $(document).ready(function(){
 
 // #11
 // hideContent if no user signed in
-hideContent(){
-
-}
-// ------------------------- END #11 -------------------------------
-
-// #12
-// displayContent if no user signed in
-hideContent(){
-
-}
+// hideContent(){
+//
+// }
+// // ------------------------- END #11 -------------------------------
+//
+// // #12
+// // displayContent if no user signed in
+// hideContent(){
+//
+// }
