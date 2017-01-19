@@ -174,12 +174,19 @@ function displaySignIn(){
   // make a signin button
   var signInBtn = $("<button>")
     .attr("type", "button")
-    .addClass("btn btn-default navbar-btn")
+    .addClass("btn btn-primary navbar-btn")
     .attr("id", "signin")
-    .text("Sign in");
+    .text("Sign in")
+    .data("toggle", "modal")
+    .data("target", "#exampleModal");
 
   // // add event listener to sign out btn
-  signInBtn.on("click", signIn_PROXY); // closes event listener
+  signInBtn.on("click", function(){
+    // signIn_PROXY();
+    console.log("You clicked me");
+    // $("#exampleModal").click();
+    $("#exampleModal").trigger("click");
+  }); // closes event listener
 
   // TO DO ... display a SIGN UP as well
   // make a signUp button
@@ -197,6 +204,7 @@ function displaySignIn(){
   navBar.append(signUpBtn);
 
 };
+
 // ------------------------- END #7 -------------------------------
 
 
