@@ -1,100 +1,224 @@
 <html>
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="assets/css/reset.css">
-  <!-- includes bootstrap 3 as default, without integrity/crossorigin -->
-  <link rel="stylesheet"
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-  >
-  <link rel="stylesheet" href="assets/css/style.css">
 
-  <title>NJ transit</title>
-</head>
-<body>
-<div class="container">
-  <!-- Display Time -->
-  <div class="row">
-    <!-- <code>Time will be displayed here</code> -->
-    <h2>The Current Time:
-          <div id="timeDisplay"></div>
-    </h2>
-  </div>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible"
+          content="ie=edge">
+        <!-- includes bootstrap 3 as default, without integrity/crossorigin -->
+        <link rel="stylesheet"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+          <!-- <link rel="stylesheet" href="assets/css/style.css"> -->
+          <link rel="stylesheet"
+              href="assets/css/style_v2.css">
+            <title>Train Scheduler</title>
+  </head>
 
-  <!-- Display table of trains -->
-  <div class="row">
-    <h3>display trains here</h3>
-    <table class="table">
-      <tr class="header">
-        <th>Train Name</th>
-        <th>Destination</th>
-        <th>Frequency</th>
-        <th>Next Arrival(mins)</th>
-        <th>Minutes Away:</th>
-        <th></th>
-      </tr>
-      <tr>
-        <td>Test</td>
-        <td>NYC</td>
-        <td>12</td>
-        <td>6</td>
-        <td>unknown</td>
-        <td><button class="btn btn-danger"><span class="glyphicon glyphicon-remove"></span></button></td>
-      </tr>
-    </table>
+  <body>
 
-
-  </div>
-  <!-- Form to submit Train -->
-  <div class="row">
-    <h2>Submit Train info here</h2>
-    <form>
-      <!--  Train Name -->
-      <div class="form-group">
-        <label for="trainName">Name of Train:</label>
-        <input type="text" name="trainName" value="" id="trainName">
+    <div class="container">
+      <!-- Modals  -->
+      <!--  Sign In Modal! -->
+    <div class="modal fade" id="signInModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title text-center">Login In</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+            <!--  form group for email -->
+              <div class="form-group">
+                <label for="inputEmail_1">Email</label>
+                <input type="email" id="inputEmail_1">
+              </div>
+              <!--  form group for password -->
+              <div class="form-group">
+                <label for="inputPassword_1">Password</label>
+                <input type="password" id="inputPassword_1">
+              </div>
+              <!-- submit button -->
+              <button type="button" class="btn btn-default" id ="signInBtnSubmit">Sign in</button>
+            </form>
+          </div>
+          <!-- <div class="modal-footer">
+            <p>modal footer</p>
+          </div> -->
+        </div>
       </div>
-      <!--  Origin -->
-      <div class="form-group">
-        <label for="origin">Origin: </label>
-        <input type="text" name="origin" value="" id="origin">
+    </div>
+    <!--  Sign Up Modal! -->
+    <div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+              <h4 class="modal-title text-center">Sign Up (free)</h4>
+          </div>
+          <div class="modal-body">
+            <form>
+            <!--  form group for email -->
+              <div class="form-group">
+                <label for="inputEmail_2">Email</label>
+                <input type="email" id="inputEmail_2">
+              </div>
+              <!--  form group for password -->
+              <div class="form-group">
+                <label for="inputPassword_2">Password</label>
+                <input type="password" id="inputPassword_2">
+              </div>
+              <!--  form group for password -->
+              <div class="form-group">
+                <label for="inputPassword_3">Confirm Password</label>
+                <input type="password" id="inputPassword_3">
+              </div>
+              <!-- submit button -->
+              <button type="button" class="btn btn-default" id ="signUpBtnSubmit">Sign Up</button>
+            </form>
+          </div>
+          <!-- <div class="modal-footer">
+            <p>modal footer</p>
+          </div> -->
+        </div>
       </div>
-      <!--  Destination -->
-      <div class="form-group">
-        <label for="destination">Destination: </label>
-        <input type="text" name="destination" value="" id="destination">
+    </div>
+
+
+
+    <!-- navbar -->
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button"
+              class="btn btn-primary navbar-btn"
+              id="signIn"
+              data-target="#signInModal"
+              data-toggle="modal">Sign In</button>
+
+            <button type="button"
+                class="btn btn-primary navbar-btn"
+                id="signUp"
+                data-target="#signUpModal"
+                data-toggle="modal">Sign Up</button>
+              <button type="button"
+                  class="btn btn-primary navbar-btn"
+                  id="signOut">Sign Out</button>
+                <!-- <a class="navbar-brand" href="#">
+          <img alt="Brand" src="...">
+        </a> -->
+                <!-- <button type="button" class="btn btn-default navbar-btn" id="signin">Sign in</button> -->
+        </div>
       </div>
-      <!--  Frequency -->
-      <div class="form-group">
-        <label for="frequency">Frequency: </label>
-        <input type="text" name="frequency" value="" id="frequency">
+    </nav>
+
+
+    <!--header-->
+    <div class="row">
+      <div class="jumbotron">
+        <h2 class="text-center">Anytime is Train Time</h2>
+        <!-- <p class="text-center">Chu chuuu!</p> -->
+        <p class="text-center"><span id="timeDisplay"></span></p>
       </div>
-      <!-- submit -->
-      <button type="submit" class="btn btn-default" id="submit">Submit</button>
-    </form>
-  </div>
+    </div>
+
+    <!-- Current Train Schedule -->
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">Current Train Schedule</div>
+        <table class="table">
+          <tr class="bg-info">
+            <th>Train Name</th>
+            <th>Destination</th>
+            <th>First Train</th>
+            <th>Frequency (min)</th>
+            <th>Next Arrival</th>
+            <th>Minutes Away</th>
+            <th></th>
+          </tr>
+          <!-- <tr>
+          <td>Trenton Express</td>
+          <td>Trenton</td>
+          <td>25</td>
+          <td>5:25pm</td>
+          <td>12</td>
+          <td><button class="btn btn-danger removeBtn">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button></td>
+        </tr> -->
+
+        </table>
+      </div>
+    </div>
+
+    <!-- Add Train Form -->
+    <div class="row">
+      <div class="panel panel-default">
+        <div class="panel-heading">Add Train</div>
+        <div class="panel-body">
+          <form>
+            <!-- <div class="row"> -->
+            <!-- Train name -->
+            <!-- <div class="col-sm-6"> -->
+            <div class="form-group">
+              <label for="trainName">Train Name</label>
+              <input type="text"
+                  class="form-control"
+                  id="trainName">
+            </div>
+            <!-- </div> -->
+            <!-- Destination -->
+            <!-- <div class="col-sm-6"> -->
+            <div class="form-group">
+              <label for="destination">Destination</label>
+              <input type="text"
+                  class="form-control"
+                  id="destination">
+            </div>
+            <!-- </div> -->
+            <!-- First Train-->
+            <!-- <div class="col-sm-6"> -->
+            <div class="form-group">
+              <label for="firstTrain">First Train Time (HH:mm - military time)</label>
+              <input type="text"
+                  class="form-control"
+                  id="firstTrain">
+            </div>
+            <!-- </div> -->
+            <!-- Destination -->
+            <!-- <div class="col-sm-6"> -->
+            <div class="form-group">
+              <label for="frequency">Frequency (min)</label>
+              <input type="text"
+                  class="form-control"
+                  id="frequency">
+            </div>
+            <!-- </div> -->
+            <button type="submit"
+                class="btn btn-default"
+                id="submitBtn">Submit</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- closes row -->
+
+    </div>
+    <!-- closes container -->
 
 
-</div> <!-- closes container div -->
+    <!-- Include scripts here -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="assets/javascript/helper.js"></script>
+    <script src="assets/javascript/time/moment.js"></script>
+    <script src="assets/javascript/time/time.js"></script>
+    <!-- firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script>
+    <script src="assets/javascript/firebase/firebase_setup.js"></script>
+    <script src="assets/javascript/firebase/firebase_authentication.js"></script>
+    <script src="assets/javascript/firebase/firebase_main.js"></script>
+    <!-- main -->
+    <script src="assets/javascript/main.js"></script>
+  </body>
 
-<!-- Including scripts here -->
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="assets/javascript/moment.js"></script>
-<!--  load firebase -->
-<!-- <script src="https://www.gstatic.com/firebasejs/3.6.4/firebase.js"></script> -->
-<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-database.js"></script>
-<script src="https://www.gstatic.com/firebasejs/3.6.2/firebase-messaging.js"></script>
-<script src="assets/javascript/firebase/01_firebase_setup.js"></script>
-<script src="assets/javascript/firebase/02_addTrain.js"></script>
-<script src="assets/javascript/firebase/03_authentication.js"></script>
-<script src="assets/javascript/firebase/04_getTrainInfo.js"></script>
-<!-- main scripts -->
-<script src="assets/javascript/time/time.js"></script>
-<script src="assets/javascript/helper.js"></script>
-<script src="assets/javascript/main.js"></script>
-
-</body>
 </html>
