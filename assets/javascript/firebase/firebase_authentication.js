@@ -17,6 +17,9 @@ firebase.auth().onAuthStateChanged(function(user){
     // if (user != null) {
     //   console.log(user.providerData);
     // };
+    // show content
+    // showContent();
+    $('#signInModal').modal('hide');
 
   } else {
     // No User is signed in

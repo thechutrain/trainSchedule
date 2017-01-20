@@ -116,7 +116,12 @@ function displayAllTrains(firebase_data){
       .append(removeBtnTd);
 
     // 5. append row to the html
-    $("table").append(train_row);
+    // TAKE THIS OUT LATER, when you control user auth upstream!
+    var user = firebase.auth().currentUser;
+    if (user!= null){
+      $(".train-table").append(train_row);
+    }
+    // $(".train-table").append(train_row);
 
   }); // closes forEach
 };

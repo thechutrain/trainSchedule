@@ -123,9 +123,11 @@
 
     <!-- Current Train Schedule -->
     <div class="row">
-      <div class="panel panel-default">
-        <div class="panel-heading">Current Train Schedule</div>
-        <table class="table">
+      <div class="panel panel-primary" id="train-schedule-panel">
+        <div class="panel-heading">
+          <h2>Current Train Schedule</h2>
+        </div>
+        <table class="train-table">
           <tr class="bg-info">
             <th>Train Name</th>
             <th>Destination</th>
@@ -135,27 +137,18 @@
             <th>Minutes Away</th>
             <th></th>
           </tr>
-          <!-- <tr>
-          <td>Trenton Express</td>
-          <td>Trenton</td>
-          <td>25</td>
-          <td>5:25pm</td>
-          <td>12</td>
-          <td><button class="btn btn-danger removeBtn">
-            <span class="glyphicon glyphicon-remove"></span>
-          </button></td>
-        </tr> -->
-
         </table>
       </div>
     </div>
 
     <!-- Add Train Form -->
     <div class="row">
-      <div class="panel panel-default">
-        <div class="panel-heading">Add Train</div>
+      <div class="panel panel-info">
+        <div class="panel-heading">
+          <h2>Add Train</h2>
+        </div>
         <div class="panel-body">
-          <form>
+          <form id="train-submission-form">
             <!-- <div class="row"> -->
             <!-- Train name -->
             <!-- <div class="col-sm-6"> -->

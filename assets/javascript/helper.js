@@ -249,13 +249,46 @@ $(document).ready(function(){
 
 // #11
 // hideContent if no user signed in
-// hideContent(){
+// function hideContent(){
+//   // Hide the Train Schedule Panel & Train Submission Form
+//   // $("table.train-table").hide(); // still can see if if you go into DOM :)
+//   $("table.train-table").empty();
+//   debugger;
+//   $("#train-submission-form").hide();
 //
-// }
+//   // tell use to sign in / sign up to view
+//   var panelBody = $("<div>").addClass("panel-body").append(
+//     $("<h4>").addClass("text-center").text("Please Sign in or Sign up to view")
+//   );
+//   $("#train-schedule-panel").append(panelBody);
+// };
 // // ------------------------- END #11 -------------------------------
 //
 // // #12
 // // displayContent if no user signed in
-// hideContent(){
+// function showContent(){
+//   // debugger;
+//   // Remove the panel-body
+//   $("#train-schedule-panel .panel-body").remove();
+//   // Make the train table
+//   var th = $("<th>");
+//   var tr = $("<tr>").addClass("bg-info")
+//     .append( th.clone().text("Train Name") )
+//     .append( th.clone().text("Destination") )
+//     .append( th.clone().text("First Train") )
+//     .append( th.clone().text("Frequency (min)") )
+//     .append( th.clone().text("Next Arrival") )
+//     .append( th.clone().text("Minutes Away") )
+//     .append( th.clone() );
+//     debugger;
+//     $("table.train-table").append(tr);
+//   // append to the panel-body
 //
+//   // if ( $(".train-table").length === 0){
+//   //   $("#train-schedule-panel").append(table);
+//   // }
+//
+//
+//   // Display the submit train form
+//   $("#train-submission-form").show();
 // }
