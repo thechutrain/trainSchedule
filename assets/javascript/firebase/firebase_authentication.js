@@ -21,6 +21,11 @@ firebase.auth().onAuthStateChanged(function(user){
     // showContent();
     $('#signInModal').modal('hide');
 
+    // trains 
+    console.log("Going to load in the train")
+    var trains_ref = firebase_db.ref('trains/');
+    trains_ref.on('value', displayAllTrains); 
+
   } else {
     // No User is signed in
     // console.info("NO USER signed in :( ");

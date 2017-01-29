@@ -22,7 +22,7 @@ var time = {
       if ((this.currentTime.seconds() % 6) === 0){
         // update;
         // test();
-        // console.info("updating ...");
+        console.info("updating ...");
         updateTrainTimes();
       };
     }.bind(this), 1000);
