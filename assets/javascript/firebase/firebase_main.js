@@ -38,10 +38,10 @@ function addTrain(name, destination, firstTrainTime, frequency){
 //  ------------------ PART II. ----------------------------------
 // ---------------- Get Train Data from the Firebase DB ----------
 // get a references to the trains table in firebase
-var trains_ref = firebase_db.ref('trains/');
+// var trains_ref = firebase_db.ref('trains/');
 // Event Listener with call back function
 // trains_ref.once('value', displayAllTrains);
-trains_ref.on('value', displayAllTrains); // difference if data ever gets changed, it automatically updates!
+// trains_ref.on('value', displayAllTrains); // difference if data ever gets changed, it automatically updates!
 
 // helper function -- gets called back
 function displayAllTrains(firebase_data){

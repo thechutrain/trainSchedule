@@ -6,7 +6,7 @@ var time = {
   /*
   initializes the current time
   */
-  initialize(){
+  initialize: function(){
     // 1) set the current time
     this.currentTime = moment();
 
@@ -22,14 +22,14 @@ var time = {
       if ((this.currentTime.seconds() % 6) === 0){
         // update;
         // test();
-        // console.info("updating ...");
+        console.info("updating ...");
         updateTrainTimes();
       };
     }.bind(this), 1000);
   },
 
-  display(){
-    let time = this.currentTime.format('HH:mm:ss'); // time is a string 'hh:mm:ss a'
+  display: function(){
+    var time = this.currentTime.format('HH:mm:ss'); // time is a string 'hh:mm:ss a'
     this.displayTarget.html(time);
   }
 }
